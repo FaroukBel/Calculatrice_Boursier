@@ -15,6 +15,7 @@ import android.widget.EditText;
 
 import java.lang.ref.WeakReference;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.NumberFormat;
 
 public class MainActivity extends AppCompatActivity {
@@ -86,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
             if (s.isEmpty()) return;
             editText.removeTextChangedListener(this);
             String cleanString = s.replaceAll("[H,.]", "");
-            BigDecimal parsed = new BigDecimal(cleanString).setScale(2, BigDecimal.ROUND_FLOOR).divide(new BigDecimal(100), BigDecimal.ROUND_FLOOR);
+            BigDecimal parsed = new BigDecimal(cleanString).setScale(2, RoundingMode.FLOOR).divide(new BigDecimal(100), RoundingMode.FLOOR);
             String formatted = NumberFormat.getCurrencyInstance().format(parsed);
             editText.setText(formatted);
             editText.setSelection(formatted.length());
@@ -118,7 +119,6 @@ public class MainActivity extends AppCompatActivity {
 
         if(qte.isFocused() && getString(R.string.qte).equals(qte.getText().toString())){
             int i = 1;
-            System.out.println(i);
             qte.setText(strToAdd);
             qte.setSelection(cursorPosqte + 1);
         }
@@ -317,6 +317,7 @@ public class MainActivity extends AppCompatActivity {
             updateText("^");
     }
 
+    @SuppressLint("SuspiciousIndentation")
     public void commaBTN(View view) {
         if (display.isFocused() || buy.isFocused() || sell.isFocused())
         updateText(".");
